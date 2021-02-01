@@ -28,6 +28,8 @@ rm -Rf eigen-3.3.4.zip
 rm -Rf eigen-3.3.4
 
 cd /io
+pwd
+ls -l
 for PYBIN in /opt/python/cp3*/bin; do
   
   #if [ "${PYBIN}" != "/opt/python/cp36-cp36m/bin" ]; then
