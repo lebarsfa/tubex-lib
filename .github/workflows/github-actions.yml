@@ -75,7 +75,7 @@ dockercentos:
         chmod a+x scripts/docker/build_pybinding.sh
         docker run --rm -v `pwd`:/io benensta/pyibex-docker /io/scripts/docker/build_pybinding.sh
         ls wheelhouse
- dockerpi:
+dockerpi:
     name: Raspbian Buster pi Docker
     runs-on: ubuntu-latest
     steps: 
