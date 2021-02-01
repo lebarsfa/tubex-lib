@@ -4,6 +4,7 @@ on:
         branches: '**'
         tags: '' # Restrict to blank tags
     pull_request:
+
 jobs:
  # This job can be removed if a new release should not be created...
 # deploy:
@@ -17,6 +18,7 @@ jobs:
 #        draft: true
 #        tag_name: autotagname
 #        release_name: autotagname
+
  matrix:
     runs-on: ${{ matrix.cfg.os }}
     defaults:
@@ -74,6 +76,7 @@ jobs:
         cd ../..
       shell: bash
       if: ${{ matrix.cfg.with_cpp_bundle }}==ON
+
  dockercentos:
     name: CentOS Docker
     runs-on: ubuntu-latest
@@ -93,7 +96,8 @@ jobs:
         file: "wheelhouse/*.whl"
         overwrite: true
         tag_name: autotagname
-dockerpi:
+
+ dockerpi:
     name: Raspbian Buster pi Docker
     runs-on: ubuntu-latest
     steps: 
