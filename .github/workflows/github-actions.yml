@@ -65,6 +65,7 @@ jobs:
       if: matrix.cfg.py_v_maj!='3' || matrix.cfg.py_v_min!='4'
     - run: |
         git clone https://github.com/ibex-team/ibex-lib.git ; cd ibex-lib ; mkdir build ; cd build ; cmake ${{ matrix.cfg.cmake_params }} -D CMAKE_CXX_FLAGS=" /D WIN32 /EHsc /D _CRT_SECURE_NO_WARNINGS /wd4267 /wd4244 /wd4305" -D CMAKE_C_FLAGS=" /D WIN32 /EHsc /D _CRT_SECURE_NO_WARNINGS /wd4267 /wd4244 /wd4305" -D CMAKE_INSTALL_PREFIX="../../ibex" -D INTERVAL_LIB=filib .. ; cmake --build . --config Release --target install ; cd ../..
+      shell: bash
       if: steps.cache-ibex.outputs.cache-hit != 'true'
     - run: |
         mkdir build ; cd build
