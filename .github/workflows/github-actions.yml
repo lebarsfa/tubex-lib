@@ -27,8 +27,24 @@ jobs:
     strategy:
         matrix:
             cfg:
-#            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A Win32', choco_vs_tools: 'vcbuildtools', cpcfg: '-win32', py_v_maj: 3, py_v_min: 4, with_python: ON, with_cpp_bundle: ON }
+            # Change with_python: OFF when pyibex becomes available...
+            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc16, cmake_params: '-G "Visual Studio 16" -A Win32', cpcfg: '-win32', py_v_maj: 3, py_v_min: 9, with_python: OFF, with_cpp_bundle: ON }
+            # Uncomment when pyibex becomes available...
+#            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc16, cmake_params: '-G "Visual Studio 16" -A Win32', cpcfg: '-win32', py_v_maj: 3, py_v_min: 8, with_python: OFF }
             - { os: windows-2019, shell: cmd, arch: x64, runtime: vc16, cmake_params: '-G "Visual Studio 16" -A x64', cpcfg: '-win_amd64', py_v_maj: 3, py_v_min: 9, with_python: ON, with_cpp_bundle: ON }
+            - { os: windows-2019, shell: cmd, arch: x64, runtime: vc16, cmake_params: '-G "Visual Studio 16" -A x64', cpcfg: '-win_amd64', py_v_maj: 3, py_v_min: 8, with_python: ON }
+            - { os: windows-2016, shell: cmd, arch: x86, runtime: vc15, cmake_params: '-G "Visual Studio 15" -A Win32', with_cpp_bundle: ON }
+            - { os: windows-2016, shell: cmd, arch: x64, runtime: vc15, cmake_params: '-G "Visual Studio 15" -A x64', with_cpp_bundle: ON }
+            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A Win32', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win32', py_v_maj: 3, py_v_min: 7, with_python: OFF, with_cpp_bundle: ON }
+            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A Win32', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win32', py_v_maj: 3, py_v_min: 6, with_python: ON }
+            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A Win32', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win32', py_v_maj: 3, py_v_min: 5, with_python: ON }
+            # Should be Visual Studio 2010 for Python 3.4...?
+            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A Win32', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win32', py_v_maj: 3, py_v_min: 4, with_python: ON }
+            - { os: windows-2019, shell: cmd, arch: x64, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A x64', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win_amd64', py_v_maj: 3, py_v_min: 7, with_python: ON }
+            - { os: windows-2019, shell: cmd, arch: x64, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A x64', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win_amd64', py_v_maj: 3, py_v_min: 6, with_python: ON }
+            - { os: windows-2019, shell: cmd, arch: x64, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A x64', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win_amd64', py_v_maj: 3, py_v_min: 5, with_python: ON }
+            # Should be Visual Studio 2010 for Python 3.4...?
+            - { os: windows-2019, shell: cmd, arch: x64, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A x64', choco_vs_tools: 'vcbuildtools', cpcfg: 'm-win_amd64', py_v_maj: 3, py_v_min: 4, with_python: ON }
     steps: 
     - uses: actions/checkout@v2
       with:
@@ -81,7 +97,7 @@ jobs:
         7z x codac_test_win.zip -y ; rm -Rf codac_test_win.zip ; cd codac_test_win ; rm -Rf ibex codac ; cp -Rf ../ibex . ; cp -Rf ../codac .; cd .. ; 7z a -y codac_test_${CFG}.zip codac_test_win ; cd codac_test_win/test
         cmake ${{ matrix.cfg.cmake_params }} .
         cmake --build . --config Release
-        /Release/my_project.exe
+        ./Release/my_project.exe
         cd ../..
       shell: bash
       if: ${{ matrix.cfg.with_cpp_bundle }}==ON
