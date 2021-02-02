@@ -27,12 +27,13 @@ jobs:
     strategy:
         matrix:
             cfg:
-            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A Win32', choco_vs_tools: 'vcbuildtools', cpcfg: '-win32', py_v_maj: 3, py_v_min: 4, with_python: ON, with_cpp_bundle: ON }
+#            - { os: windows-2019, shell: cmd, arch: x86, runtime: vc14, cmake_params: '-G "Visual Studio 14" -A Win32', choco_vs_tools: 'vcbuildtools', cpcfg: '-win32', py_v_maj: 3, py_v_min: 4, with_python: ON, with_cpp_bundle: ON }
             - { os: windows-2019, shell: cmd, arch: x64, runtime: vc16, cmake_params: '-G "Visual Studio 16" -A x64', cpcfg: '-win_amd64', py_v_maj: 3, py_v_min: 9, with_python: ON, with_cpp_bundle: ON }
     steps: 
     - uses: actions/checkout@v2
       with:
         submodules: true
+        fetch-depth: 0
         clean: false
     - uses: actions/setup-python@v2
       with:
@@ -84,6 +85,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
+        fetch-depth: 0
         clean: false
     - run: |
         chmod a+x scripts/docker/build_pybinding.sh
@@ -97,13 +99,14 @@ jobs:
         overwrite: true
         tag_name: autotagname
 
- dockerpi:
-    name: Raspbian Buster pi Docker
-    runs-on: ubuntu-latest
-    steps: 
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-        clean: false
-    - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    - run: docker run -i -v "${PWD}/..:${PWD}/.." lebarsfa/pi:buster-ibex /bin/bash -c "uname -a && cat /etc/os-release && cd ${PWD} && lsb_release -a && sudo apt-get -q update ; sudo apt-get -y install libeigen3-dev ; mkdir build ; cd build && cmake -D CMAKE_PREFIX_PATH=../ibex -D CMAKE_INSTALL_PREFIX=../../codac .. && cmake --build . --target install && cd ../.. && wget http://www.ensta-bretagne.fr/lebars/Share/codac_test_win.zip -nv && unzip -q -o codac_test_win.zip && rm -Rf codac_test_win.zip && cd codac_test_win && mv test .. && cd ../test && rm -Rf ../codac_test_win && cmake . && cmake --build . && ./my_project"
+# dockerpi:
+#    name: Raspbian Buster pi Docker
+#    runs-on: ubuntu-latest
+#    steps: 
+#    - uses: actions/checkout@v2
+#      with:
+#        submodules: true
+#        fetch-depth: 0
+#        clean: false
+#    - run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
+#    - run: docker run -i -v "${PWD}/..:${PWD}/.." lebarsfa/pi:buster-ibex /bin/bash -c "uname -a && cat /etc/os-release && cd ${PWD} && lsb_release -a && sudo apt-get -q update ; sudo apt-get -y install libeigen3-dev ; mkdir build ; cd build && cmake -D CMAKE_PREFIX_PATH=../ibex -D CMAKE_INSTALL_PREFIX=../../codac .. && cmake --build . --target install && cd ../.. && wget http://www.ensta-bretagne.fr/lebars/Share/codac_test_win.zip -nv && unzip -q -o codac_test_win.zip && rm -Rf codac_test_win.zip && cd codac_test_win && mv test .. && cd ../test && rm -Rf ../codac_test_win && cmake . && cmake --build . && ./my_project"
