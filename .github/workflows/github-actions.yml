@@ -154,7 +154,7 @@ jobs:
         del /f /q %SystemDrive%\qt-opensource-windows-x86-5.12.6.exe
       shell: cmd
       if: matrix.cfg.runtime=='mingw7'
-    - run: choco install -y winflexbison make patch
+    - run: choco install -y winflexbison make patch zip
       # Registry bug...?
     - run: wget https://github.com/ros2/choco-packages/releases/download/2020-02-24/eigen.3.3.4.nupkg --no-check-certificate -nv & choco install -y -s . eigen & reg add HKEY_LOCAL_MACHINE\SOFTWARE\Kitware\CMake\Packages\Eigen3 /v "CMakePackageDir" /t REG_SZ /d "C:\ProgramData\chocolatey\lib\eigen\share\cmake" /f
       shell: cmd
