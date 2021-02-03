@@ -306,7 +306,7 @@ matrix:
       script: 
         - if [ ! -e "ibex/include/ibex.h" ]; then ( git clone https://github.com/ibex-team/ibex-lib.git ; cd ibex-lib ; mkdir build ; cd build ; cmake -G "${CMAKE_PARAM_G}" -D CMAKE_INSTALL_PREFIX="../../ibex" -D CMAKE_CXX_FLAGS="-fPIC" -D CMAKE_C_FLAGS="-fPIC" -D INTERVAL_LIB=filib .. ; cmake --build . --target install ; cd ../.. ) else echo "Using cached directory." ; fi
         - mkdir build ; cd build
-        - cmake -G "MSYS Makefiles" -D CMAKE_PREFIX_PATH="ibex" -D CMAKE_INSTALL_PREFIX="../codac" ..
+        - cmake -G "${CMAKE_PARAM_G}" -D CMAKE_PREFIX_PATH="ibex" -D CMAKE_INSTALL_PREFIX="../codac" ..
         - cmake --build . --target install
         - cd ..
         # Test C++ program and bundle...
@@ -333,7 +333,7 @@ matrix:
       script: 
         - if [ ! -e "ibex/include/ibex.h" ]; then ( git clone https://github.com/ibex-team/ibex-lib.git ; cd ibex-lib ; mkdir build ; cd build ; cmake -G "${CMAKE_PARAM_G}" -D CMAKE_INSTALL_PREFIX="../../ibex" -D CMAKE_CXX_FLAGS="-fPIC" -D CMAKE_C_FLAGS="-fPIC" -D INTERVAL_LIB=filib .. ; cmake --build . --target install ; cd ../.. ) else echo "Using cached directory." ; fi
         - mkdir build ; cd build
-        - cmake -G "MSYS Makefiles" -D CMAKE_PREFIX_PATH="ibex" -D CMAKE_INSTALL_PREFIX="../codac" ..
+        - cmake -G "${CMAKE_PARAM_G}" -D CMAKE_PREFIX_PATH="ibex" -D CMAKE_INSTALL_PREFIX="../codac" ..
         - cmake --build . --target install
         - cd ..
         # Test C++ program and bundle...
